@@ -32,7 +32,7 @@ def arff2df (paths, include_path = False):
                         Defaults to False.
 
     Returns:
-        list of pandas dataframes: A list of dataframes converted from the specified .arff files.
+        list of pandas dataframe: A list of dataframes converted from the specified .arff files.
     """
     df_list = []    
     for i in range(len(paths)):

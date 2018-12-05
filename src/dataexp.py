@@ -1,6 +1,8 @@
 import numpy as np
 import pandas as pd 
 
+## TODO WRITE COMMENTS 
+
 def missing_stats(dataframes):
     df_missing = []
     if isinstance(dataframes, pd.DataFrame):
