@@ -1,15 +1,11 @@
 import numpy as np
 import pandas as pd
 import impyute as impy 
+import utilities as util
 from sklearn.impute import SimpleImputer
 
 def __sklearn_imputation(dataframes, strategy):
-    dfs = []
-    if isinstance(dataframes, pd.DataFrame):
-        dfs = [dataframes]
-    else:
-        dfs = dataframes
-
+    dfs = util.df_to_dfs(dataframes)
     imp_sklearn_dfs = []
     sklearn_imputer = SimpleImputer(missing_values=np.nan, strategy= strategy)
     for i in range(len(dfs)):
@@ -65,12 +61,7 @@ def em_imputation(dataframes, dtype, loops = 50):
     Returns:
         list of pandas dataframe: A list of pandas dataframe imputted using expectation maximization.
     """
-    dfs = []
-    if isinstance(dataframes, pd.DataFrame):
-        dfs = [dataframes]
-    else:
-        dfs = dataframes
-    
+    dfs = util.df_to_dfs(dataframes)
     imp_em_dfs = []
     for i in range(len(dfs)):
         tmp_em_df = impy.imputation.cs.em(dfs[i].values, loops = loops, dtype = dtype) 
@@ -80,3 +71,47 @@ def em_imputation(dataframes, dtype, loops = 50):
                 ).astype(dfs[i].dtypes.to_dict()))
 
     return imp_em_dfs
+
+def mice_imputation(dataframes, dtype):
+    """Imputes missing values found in pandas dataframe/s using impyute expectation maximization.
+
+    Args:
+        dataframes (pandas dataframe or list of dataframes): The dataframe/s to impute missing values for.
+        dtype (str(‘int’,’float’)): Type of data.
+        loops (int, optional): Number of expectation maximization iterations to run before breaking.  Defaults to 50.
+
+    Returns:
+        list of pandas dataframe: A list of pandas dataframe imputted using expectation maximization.
+    """
+    dfs = util.df_to_dfs(dataframes)
+    imp_mice_dfs = []
+    for i in range(len(dfs)):
+        tmp_mice_df = impy.imputation.cs.mice(dfs[i].values, dtype = dtype) 
+        imp_mice_dfs.append(
+            pd.DataFrame(
+                tmp_mice_df, columns = dfs[i].columns
+                ).astype(dfs[i].dtypes.to_dict()))
+
+    return imp_mice_dfs
+
+def knn_imputation(dataframes, dtype, k = 100):
+    """Imputes missing values found in pandas dataframe/s using impyute knn.
+
+    Args:
+        dataframes (pandas dataframe or list of dataframes): The dataframe/s to impute missing values for.
+        dtype (str(‘int’,’float’)): Type of data.
+        k (int): Number of neighbours used in KNN. 
+
+    Returns:
+        list of pandas dataframe: A list of pandas dataframe imputted using knn.
+    """
+    dfs = util.df_to_dfs(dataframes)
+    imp_knn_dfs = []
+    for i in range(len(dfs)):
+        tmp_knn_df = impy.imputation.cs.fast_knn(dfs[i].values, k = k, dtype = dtype) 
+        imp_knn_dfs.append(
+            pd.DataFrame(
+                tmp_knn_df, columns = dfs[i].columns
+                ).astype(dfs[i].dtypes.to_dict()))
+
+    return imp_knn_dfs

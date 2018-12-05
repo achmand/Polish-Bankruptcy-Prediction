@@ -1,15 +1,10 @@
 import numpy as np
 import pandas as pd 
-
+import utilities as util
 ## TODO WRITE COMMENTS 
 
 def missing_stats(dataframes):
-    df_missing = []
-    if isinstance(dataframes, pd.DataFrame):
-        df_missing = [dataframes]
-    else:
-        df_missing = dataframes
-            
+    df_missing = util.df_to_dfs(dataframes)            
     missing_values_stats = np.zeros((len(df_missing), 4))
     for i in range(len(df_missing)):
         instances_no_missing = df_missing[i].dropna().shape[0]
