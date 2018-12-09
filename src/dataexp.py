@@ -1,6 +1,8 @@
 import numpy as np
 import pandas as pd 
 import utilities as util
+import missingno as msno 
+
 ## TODO WRITE COMMENTS 
 
 def missing_stats(dataframes):
@@ -16,3 +18,15 @@ def missing_stats(dataframes):
     columns = ["total_instances", "total_instances_with_missing_values", "total_instances_without_missing_values", "data_loss"]
     df_missing_stats = pd.DataFrame(data = missing_stats, columns = columns)
     return df_missing_stats
+
+def nullity_matrix(dataframes, figsize = (20,5), include_all = False):
+    dfs = util.df_to_dfs(dataframes) 
+    for i in range(len(dataframes)):
+        tmp_df = dfs[i] if include_all == True else dfs[i][dfs[i].columns[dfs[i].isna().any()].tolist()]
+        msno.matrix(tmp_df, labels = True, figsize = figsize)
+    
+def nullity_heatmap(dataframes, figsize = (20,20), include_all = False):
+    dfs = util.df_to_dfs(dataframes) 
+    for i in range(len(dataframes)):
+        tmp_df = dfs[i] if include_all == True else dfs[i][dfs[i].columns[dfs[i].isna().any()].tolist()]
+        msno.heatmap(tmp_df, labels = True, figsize = figsize)
