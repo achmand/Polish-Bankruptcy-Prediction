@@ -20,13 +20,20 @@ class Decision: # TODO -> Write comments
 
     def __repr__(self):
         # output of the Decision as a str 
-        compare_condition = "<=" if isinstance(self.val, (int, float)) == True else "=="
+        compare_condition = ">=" if isinstance(self.val, (int, float)) == True else "=="
         return "compare value: {0} {1}".format(compare_condition, str(self.val))
 
 ##########################################################################
 class LeafNode:
-    def __init__(self):
-        print("")
+    def __init__(self, y):
+        self.outcomes = category_counts(y)
+
+##########################################################################
+class InternalNode:
+    def __init__(self, decision, left_branch, right_branch):
+        self.decision = decision
+        self.left_branch = left_branch
+        self.right_branch = right_branch
 
 ##########################################################################
 
@@ -83,7 +90,6 @@ def information_gain(left_instances, right_instances, current_gini):
 
 # TODO -> Add comments
 def decision_split(instances, decision):
-    # TODO -> THIS MUST RETURN NUMPY TRY TO GET RID OF LISTS !!!
     
     # define two lists to append instances which satisfies the decision or not
     true_instances = []
@@ -95,7 +101,7 @@ def decision_split(instances, decision):
         tmp_list.append(instance)
 
     # return lists split by decision
-    return np.array(true_instances), np.array(false_instances)
+    return np.array(true_instances, dtype = object), np.array(false_instances, dtype = object)
 
 def get_split(instances):
 
@@ -135,9 +141,41 @@ def get_split(instances):
             current_info_gain = information_gain(true_instances, false_instances, current_gini)
 
             # if information gain is higher than best set new best 
-            if current_info_gain >= best_gain:
+            if current_info_gain > best_gain:
                 best_gain = current_info_gain
                 best_decision = current_decision
 
     # return best split
     return best_gain, best_decision
+
+def construct_tree(instances):
+
+    # split dataset and get the decision with the highest gain
+    gain, decision = get_split(instances)
+    
+    # there is no more highest gain return LeafNode
+    if(gain == 0):
+        # get outcome column index 
+        outcome_col = instances.shape[1] - 1
+        return LeafNode(instances[:,outcome_col])
+
+    # if there is more gain to get from other features, re-split 
+    true_instances, false_instances = decision_split(instances, decision)
+
+    # use recursion to continue construct the tree
+    true_branch = construct_tree(true_instances)
+    false_branch = construct_tree(false_instances)
+
+    # returns an internal node 
+    return InternalNode(decision, true_branch, false_branch)
+
+def classify(instance, node):
+
+    # if lead node is reach output outcome 
+    if isinstance(node, LeafNode):
+        return node.outcomes
+    
+    # traverse using recursion the decision tree until u find outcome 
+    branch = node.left_branch if node.decision.compare(instance) else node.right_branch
+    return classify(instance, branch) 
+
