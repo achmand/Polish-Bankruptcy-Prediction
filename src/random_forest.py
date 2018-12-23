@@ -2,7 +2,7 @@
 import numpy as np
 
 ##########################################################################
-class Decision: # TODO -> Write comments
+class Decision: 
     
     def __init__(self, col, val):
         self.col = col
