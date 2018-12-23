@@ -78,6 +78,9 @@ def information_gain(left_instances, right_instances, current_gini):
     lnode_count = float(len(left_instances)) / float(len(left_instances) + len(right_instances))
     rnode_count = 1 - lnode_count
 
+    #print(lnode_count)
+    #print(rnode_count)
+
     # get outcome column index 
     outcome_col = left_instances.shape[1] - 1
 
