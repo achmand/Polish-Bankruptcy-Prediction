@@ -87,7 +87,7 @@ class DecisionTree:
         true_branch = self.__construct_tree(true_instances)
         false_branch = self.__construct_tree(false_instances)
 
-        return InternalNode(decision, true_branch, false_branch)
+        return InternalNode(decision, true_branch, false_branch)   
 
     def fit(self,x, y):
         # concatenate x and y   

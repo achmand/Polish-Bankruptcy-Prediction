@@ -19,6 +19,31 @@ def missing_stats(dataframes):
     df_missing_stats = pd.DataFrame(data = missing_stats, columns = columns)
     return df_missing_stats
 
+def imbalanced_stats(dataframes, outcome):
+    df_imbalanced = util.df_to_dfs(dataframes)
+    grouping = np.unique(df_imbalanced[0]["outcome"], return_counts = False)
+    total_classes = len(grouping)
+    imbalanced_stats = np.zeros((len(df_imbalanced), 2 + total_classes))
+    
+    for i in range(len(df_imbalanced)):
+        group, occurrences = np.unique(df_imbalanced[i]["outcome"], return_counts = True)
+        outcomes = dict(zip(group, occurrences))
+        total_outcomes = 0
+        for x in range(total_classes):
+            imbalanced_stats[i][x] = outcomes[x]
+            total_outcomes += outcomes[x]
+        
+        imbalanced_stats[i][0 + total_classes] = min(outcomes, key=outcomes.get)
+        imbalanced_stats[i][1 + total_classes] = min(outcomes.values()) / total_outcomes
+
+    columns = ["minortiy_label" , "minority_percentage"]
+    
+    for x in range(total_classes):
+        columns = ["label_" + str(grouping[(total_classes - 1) - x])] + columns
+    
+    df_imbalanced_stats = pd.DataFrame(data = imbalanced_stats, columns = columns)
+    return df_imbalanced_stats
+
 def nullity_matrix(dataframes, figsize = (20,5), include_all = False):
     dfs = util.df_to_dfs(dataframes) 
     for i in range(len(dataframes)):
