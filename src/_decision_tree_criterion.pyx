@@ -1,5 +1,6 @@
 import numpy as np 
 cimport numpy as np 
+from cpython cimport bool
 
 cpdef double gini_impurity(np.ndarray[np.int8_t, ndim = 1, mode = 'c'] y):
     """A metric to measure the relative frequency of a category (j) at node (i).
@@ -51,3 +52,22 @@ cpdef double information_gain(np.ndarray[np.int8_t, ndim = 1, mode = 'c'] y_left
     
     # calculate and return information gain
     return gini - l_impurity - r_impurity
+
+cpdef tuple decision_split(np.ndarray x, (int, double) decision):
+    cdef int col_pos = decision[0]
+    cdef double decision_val = decision[1]
+    cdef int rows_len = x.shape[0]
+    
+    cdef list true_instances = []
+    cdef list false_instances = []
+
+    cdef int i
+    cdef double current_val
+    for i in range(rows_len):
+        current_val = x[i][col_pos] 
+        if(current_val >= decision_val):
+            true_instances.append(x[i])
+        else:   
+            false_instances.append(x[i])
+    
+    return np.array(true_instances, dtype = object), np.array(false_instances, dtype = object)
