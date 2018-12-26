@@ -1,9 +1,16 @@
+###### importing libraries ################################################
+# basic libraries for matrix operations
 import numpy as np
 import pandas as pd
-import impyute as impy 
+# for utility functions
 import utilities as util
+# to impute missing values in datasets
+import impyute as impy 
 from sklearn.impute import SimpleImputer
+# to over sample datasets 
+from imblearn.over_sampling import SMOTE
 
+###### data imputation ###################################################
 def __sklearn_imputation(dataframes, strategy):
     dfs = util.df_to_dfs(dataframes)
     imp_sklearn_dfs = []
@@ -115,3 +122,50 @@ def knn_imputation(dataframes, dtype, k = 100):
                 ).astype(dfs[i].dtypes.to_dict()))
 
     return imp_knn_dfs
+
+###### over sampling  ####################################################
+def oversample_smote(dataframes, sampling_strategy = "auto", random_state = 40, k = 8, columns = None, verbose = False):
+    
+    # convert df to dataframes
+    dfs = util.df_to_dfs(dataframes)
+    # initialize smote object
+    smote = SMOTE(sampling_strategy = sampling_strategy, random_state = random_state, k_neighbors = k)
+    
+    # loop in each dataframe 
+    oversampled_dfs = []
+    for i in range(len(dfs)):
+        n = dfs[i].shape[1] - 1
+        
+        # get the features for the df
+        x = dfs[i].iloc[:,0:n] 
+        # get the lables for the df 
+        y = dfs[i].iloc[:,n]
+        
+        # output log (original)
+        if(verbose):
+            group, occurrences = np.unique(y, return_counts = True)
+            outcomes = dict(zip(group, occurrences))
+            print("original dataset (labels): " + str(outcomes))
+            print("total: " + str(sum(outcomes.values())))
+        
+        # apply smote 
+        x_resampled, y_resampled = smote.fit_sample(x,y)
+             
+        # output log (oversampled)
+        if(verbose):
+            group, occurrences = np.unique(y_resampled, return_counts = True)
+            outcomes = dict(zip(group, occurrences))
+            print("resampled dataset (labels): " + str(outcomes))
+            print("total: " + str(sum(outcomes.values())) + "\n")
+        
+        # convert oversampled arrays back to dataframes
+        oversampled_instances = np.concatenate((x_resampled, np.matrix(y_resampled).T), axis=1)
+        oversampled_df = pd.DataFrame(data = oversampled_instances, columns = columns)
+        oversampled_df.iloc[:,n] = oversampled_df.iloc[:,n].astype(int)
+        oversampled_dfs.append(oversampled_df)
+        
+    
+    # return oversampled dataframes
+    return oversampled_dfs
+                                     
+##########################################################################

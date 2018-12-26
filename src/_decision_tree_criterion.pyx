@@ -70,4 +70,4 @@ cpdef tuple decision_split(np.ndarray x, (int, double) decision):
         else:   
             false_instances.append(x[i])
     
-    return np.array(true_instances, dtype = object), np.array(false_instances, dtype = object)
+    return np.array(true_instances), np.array(false_instances)

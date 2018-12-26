@@ -9,7 +9,6 @@ class LeafNode:
         self.outcome = max(outcomes, key=outcomes.get)
 
 ##########################################################################
-
 class InternalNode:
     def __init__(self, decision, left_branch, right_branch):
         self.decision = decision
@@ -17,9 +16,7 @@ class InternalNode:
         self.right_branch = right_branch
 
 ##########################################################################
-
 class DecisionTree:
-
     def __get_split(self, instances):
 
         # total length of features
