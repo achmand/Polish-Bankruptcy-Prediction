@@ -112,9 +112,25 @@ cpdef tuple decision_split(np.ndarray x, (int, double) decision):
     cdef double current_val
     for i in range(rows_len):
         current_val = x[i][col_pos] 
-        if(current_val >= decision_val):
+        if current_val >= decision_val:
             true_instances.append(x[i])
         else:   
             false_instances.append(x[i])
     
     return np.array(true_instances), np.array(false_instances)
+
+
+cpdef tuple test_split(np.ndarray[np.double_t, ndim = 2, mode = 'c'] feature_values, threshold):
+    cdef int i
+    cdef int rows_len = feature_values.shape[0]
+    cdef list true_instances = []
+    cdef list false_instances = []
+
+    for i in range(rows_len):
+        if feature_values[0][1] >= threshold:
+             true_instances.append(feature_values[i])
+        else:   
+            false_instances.append(feature_values[i])
+    
+    return np.array(true_instances).astype(np.int8), np.array(false_instances).astype(np.int8)
+
