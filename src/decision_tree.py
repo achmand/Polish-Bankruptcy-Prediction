@@ -1,5 +1,5 @@
 import numpy as np 
-import _decision_tree_criterion as dc
+import decision_tree_criterion as dc
 
 ##########################################################################
 class LeafNode:
@@ -38,7 +38,6 @@ class DecisionTree:
             # sort features by value 
             feature_values = feature_values[feature_values[:,0].argsort()]
             
-            #print(feature_values)
             # get candidates values which seperate classes (0 , 0 , 0 , 1, 1 , 0) => (0 ,1 , 0)  
             candidates = feature_values[np.insert(np.diff(feature_values[:,1]).astype(np.bool),0,True)][:,0]
             
@@ -51,14 +50,14 @@ class DecisionTree:
                 # split instances using current threshold
                 left_instances = feature_values[feature_values[:,0] >= threshold][:,1].astype(np.int8)
                 right_instances = feature_values[feature_values[:,0] < threshold][:,1].astype(np.int8)
-                
+              
                 # if there was no split continue 
                 if(left_instances.shape[0] == 0 or right_instances.shape[0] == 0):
                     continue
                 
                 # calculate information gain for this split 
                 current_gain = dc.information_gain(left_instances, right_instances, base_gini)
-                
+        
                 # if the information gain is higher than set new best
                 if current_gain > best_gain:
                     best_gain = current_gain
@@ -89,7 +88,7 @@ class DecisionTree:
     def fit(self,x, y):
         # concatenate x and y   
         instances = np.array(np.concatenate((x, np.matrix(y).T), axis=1))
-        # construct tree
+        # construct tree (train)
         self.internal_node = self.__construct_tree(instances)
 
     def __classify(self, instance, node):
