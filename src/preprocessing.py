@@ -164,8 +164,11 @@ def oversample_smote(dataframes, sampling_strategy = "auto", random_state = 40, 
         oversampled_df.iloc[:,n] = oversampled_df.iloc[:,n].astype(int)
         oversampled_dfs.append(oversampled_df)
         
-    
     # return oversampled dataframes
     return oversampled_dfs
                                      
+###### re-scaling data  ##################################################
+def scale_range(x, min, max):
+    return np.interp(x, (x.min(), x.max()) , (min, max))
+
 ##########################################################################
