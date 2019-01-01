@@ -7,10 +7,10 @@ import utilities as util
 # to impute missing values in datasets
 import impyute as impy 
 from sklearn.impute import SimpleImputer
-# to over sample datasets 
+# to over sample datasets using smote 
 from imblearn.over_sampling import SMOTE
 
-###### data imputation ###################################################
+###### data imputation ####################################################
 def __sklearn_imputation(dataframes, strategy):
     dfs = util.df_to_dfs(dataframes)
     imp_sklearn_dfs = []
@@ -171,4 +171,16 @@ def oversample_smote(dataframes, sampling_strategy = "auto", random_state = 40, 
 def scale_range(x, min, max):
     return np.interp(x, (x.min(), x.max()) , (min, max))
 
+def standardization(x):
+    """Scales values in array using standardization and replaces the values by their Z scores (x - x_mean / std). 
+    This technique redistributes the array with mean = 0 and STD = 1. 
+
+    Args:
+        x (numpy array): A 1D numpy numeric array which will be scaled using standardization.
+
+    Returns:
+        numpy array: A 1D numpy numeric array scaled using standardization.
+    """
+
+    return ((x - np.mean(x)) / np.std(x))
 ##########################################################################
