@@ -47,8 +47,6 @@ class LogisticRegression:
         else:
             -np.mean(y * np.log(h) + ((1.0 - y) * np.log(1.0 - h)))
 
-
-    # TODO -> Must add epsilon as termination criteria using cost 
     def fit(self, x, y):
         
         # set current epoch to 0 
