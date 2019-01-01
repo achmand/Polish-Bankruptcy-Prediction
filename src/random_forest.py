@@ -85,7 +85,7 @@ class RandomForest:
         # return forest containing tree
         return forest
 
-    def fit(self,x, y):
+    def fit(self, x, y):
         
         # set the number of features to used in RandomForest (attribute bagging)
         self.total_features = x.shape[1]

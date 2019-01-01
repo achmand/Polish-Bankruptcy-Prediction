@@ -4,7 +4,6 @@ from sklearn.model_selection import KFold
 
 ###### k fold  ############################################################
 def kfold_split(X, y, k = 10, shuffle = False, random_seed = None):
-
     """Splits data into K folds using sklearn KFold. This is used for cross validation.
 
     Args:
@@ -39,6 +38,5 @@ def kfold_split(X, y, k = 10, shuffle = False, random_seed = None):
 
     # return lists with split data using kfold 
     return X_train, y_train, X_test, y_test
-
 
 ###########################################################################
