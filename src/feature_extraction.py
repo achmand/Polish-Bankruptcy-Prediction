@@ -2,9 +2,12 @@
 # for dimensionality reduction using pca
 from sklearn.decomposition import PCA 
 # for utility functions
+from sklearn.feature_selection import SelectKBest
+from sklearn.feature_selection import chi2
 import utilities as util
 import pandas as pd 
 import numpy as np
+
 
 ###### feature reduction ##################################################
 def pca_reduction(dataframes, n_components = None, whiten = False, svd_solver = "auto", random_state = None, columns = None, pca_instance = None):
@@ -39,5 +42,16 @@ def pca_reduction(dataframes, n_components = None, whiten = False, svd_solver = 
 
     # return dataframes with reduced features 
     return dfs_reduced, pca_instance
+
+###### feature selection ##################################################
+def chi2_scores(x, y, keys):
+    
+    selector = SelectKBest(chi2, k = "all").fit(x, y)
+    scores = selector.scores_
+    score_dictionary = dict(zip(keys, scores))
+    sorted_by_value = sorted(score_dictionary.items(), key=lambda kv: kv[1], reverse=True)
+
+    sorted_column_names = [sorted_by_value[i][0] for i in range(len(sorted_by_value))]
+    return sorted_by_value, sorted_column_names
 
 ###########################################################################

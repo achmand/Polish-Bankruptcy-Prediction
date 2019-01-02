@@ -5,20 +5,14 @@ import math
 ###### logistic regression ################################################
 class LogisticRegression:
 
-    def __init__(self, alpha = 0.0001, threshold = 0.5,  max_epoch = None, epsilon = 0.00001, penalty = "l2", lambda_t = 1.0, verbose = False):
+    def __init__(self, alpha = 0.0001, threshold = 0.5,  max_epoch = 1000, penalty = "l2", lambda_t = 1.0, verbose = False):
         
         self.threshold = threshold
         self.alpha = alpha
         self.max_epoch = max_epoch
-        self.epsilon = epsilon 
+        #self.epsilon = epsilon 
         self.penalty = penalty 
-        self.lambda_t = lambda_t 
-
-        # check if we should use max epoch for termination
-        self.use_max_epoch = False 
-        if type(max_epoch) is int and max_epoch > 0:
-            self.use_max_epoch = True 
-        
+        self.lambda_t = lambda_t         
         self.verbose = verbose
     
     def __sigmoid(self, z):
@@ -26,19 +20,11 @@ class LogisticRegression:
 
     def __criteria_met(self):
 
-        # if max_epoch was passed must checck for both epsilon and current epochs
-        if self.use_max_epoch == True:
-            if self.curr_epoch >= self.max_epoch or self.curr_epsilon < self.epsilon:
-                return True
-            else: 
-                return False
-        # else only check for epsilon 
+        if self.curr_epoch >= self.max_epoch:
+            return True
         else: 
-            if self.curr_epsilon < self.epsilon:
-                return True
-            else: 
-                return False
-
+            return False
+        
     def __cost_function(self, y, h, thetas):
         if self.penalty == "l1":
             return -np.mean(y * np.log(h) + ((1.0 - y) * np.log(1.0 - h))) + ((self.lambda_t / (2 * len(y))) * np.sum(np.abs(thetas[1:])))
@@ -68,18 +54,17 @@ class LogisticRegression:
         thetas = np.zeros(x_bias.shape[1])
 
         # verbose print 
-        if self.use_max_epoch:
-            verbose_print = int(1/10 * self.max_epoch)
+        verbose_print = int(1/10 * self.max_epoch)
 
-        current_cost = 0.0
-        prev_cost = float("inf")
+        #current_cost = 0.0
+        #prev_cost = float("inf")
 
         # keep looping until termination is met 
         # also finding best thetas/weights using gradient descent (decreasing errors)
         while self.__criteria_met() == False: 
             
             # set prev to current
-            prev_cost = current_cost
+            #prev_cost = current_cost
 
             # theta transpose * X
             z = np.dot(x_bias, thetas)
@@ -103,7 +88,7 @@ class LogisticRegression:
             current_cost = self.__cost_function(y, h, thetas)
 
             # calculate current epsilon
-            self.curr_epsilon = np.abs(prev_cost - current_cost)
+            #self.curr_epsilon = np.abs(prev_cost - current_cost)
 
             # print current loss if verbose is on 
             if self.verbose == True and self.curr_epoch % verbose_print == 0:
@@ -115,7 +100,7 @@ class LogisticRegression:
         # print details
         if self.verbose:
             print("\nCurrent Epoch: {0}".format(self.curr_epoch))
-            print("Current Epsilon: {0}".format(self.curr_epsilon))
+            #print("Current Epsilon: {0}".format(self.curr_epsilon))
             print("Current Loss: {0}".format(current_cost))
 
         # set thetas to thetas we found aftar training
