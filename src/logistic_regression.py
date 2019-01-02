@@ -1,6 +1,6 @@
 ###### importing libraries ################################################
-import numpy as np 
 import math
+import numpy as np 
 
 ###### logistic regression ################################################
 class LogisticRegression:
