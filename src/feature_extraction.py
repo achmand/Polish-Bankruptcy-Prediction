@@ -8,7 +8,6 @@ import utilities as util
 import pandas as pd 
 import numpy as np
 
-
 ###### feature reduction ##################################################
 def pca_reduction(dataframes, n_components = None, whiten = False, svd_solver = "auto", random_state = None, columns = None, pca_instance = None):
     
@@ -28,7 +27,7 @@ def pca_reduction(dataframes, n_components = None, whiten = False, svd_solver = 
     
         # create a new pandas dataframe with reduced features       
         tmp_reduced_df = pd.DataFrame(data = dimentionality_reduction)
-        tmp_reduced_y_df = pd.concat([tmp_reduced_df, dfs[0].iloc[:,-1]], axis = 1)
+        tmp_reduced_y_df = pd.concat([tmp_reduced_df, dfs[i].iloc[:,-1]], axis = 1)
 
         # set column names         
         if i == 0 and columns == None:

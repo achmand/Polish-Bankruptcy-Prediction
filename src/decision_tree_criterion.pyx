@@ -119,7 +119,6 @@ cpdef tuple decision_split(np.ndarray x, (int, double) decision):
     
     return np.array(true_instances), np.array(false_instances)
 
-
 cpdef tuple test_split(np.ndarray[np.double_t, ndim = 2, mode = 'c'] feature_values, threshold):
     cdef int i
     cdef int rows_len = feature_values.shape[0]

@@ -1,12 +1,14 @@
 ###### importing libraries ################################################
 import math
 import numpy as np 
+from sklearn.base import BaseEstimator
+from sklearn.base import ClassifierMixin
 
 ###### logistic regression ################################################
-class LogisticRegression:
+class LogisticRegression(BaseEstimator, ClassifierMixin):
 
-    def __init__(self, alpha = 0.0001, threshold = 0.5,  max_epoch = 1000, penalty = "l2", lambda_t = 1.0, verbose = False):
-        
+    def __init__(self, alpha = 0.0001, threshold = 0.5, max_epoch = 1000, penalty = "l2", lambda_t = 0.01, verbose = False):
+   
         self.threshold = threshold
         self.alpha = alpha
         self.max_epoch = max_epoch
@@ -19,7 +21,6 @@ class LogisticRegression:
         return 1 / (1 + np.exp(-z))
 
     def __criteria_met(self):
-
         if self.curr_epoch >= self.max_epoch:
             return True
         else: 
@@ -33,7 +34,7 @@ class LogisticRegression:
         else:
             -np.mean(y * np.log(h) + ((1.0 - y) * np.log(1.0 - h)))
 
-    def fit(self, x, y):
+    def fit(self, X, y):
         
         # set current epoch to 0 
         self.curr_epoch = 0
@@ -42,16 +43,16 @@ class LogisticRegression:
         self.curr_epsilon = float("inf")
 
         # number of instances
-        m = len(y)
+        m = float(len(y))
        
         # add bias and initialize as 1 (x0 * 1 = x0), for vectorization purposes
-        bias = np.ones((x.shape[0], 1))
+        bias = np.ones((X.shape[0], 1))
 
         # concatenate bias with features, for vectorization purposes 
-        x_bias = np.concatenate((bias, x), axis = 1)
+        x_bias = np.concatenate((bias, X), axis = 1)
 
         # initialize thetas to 0s
-        thetas = np.zeros(x_bias.shape[1])
+        self.thetas = np.zeros(x_bias.shape[1])
 
         # verbose print 
         verbose_print = int(1/10 * self.max_epoch)
@@ -62,12 +63,9 @@ class LogisticRegression:
         # keep looping until termination is met 
         # also finding best thetas/weights using gradient descent (decreasing errors)
         while self.__criteria_met() == False: 
-            
-            # set prev to current
-            #prev_cost = current_cost
 
             # theta transpose * X
-            z = np.dot(x_bias, thetas)
+            z = np.dot(x_bias, self.thetas)
 
             # hypothesis 
             h = self.__sigmoid(z)
@@ -77,18 +75,16 @@ class LogisticRegression:
 
             # apply penalty 
             if self.penalty == "l1":
-                gradient[1:] = gradient[1:] + (abs(self.lambda_t) / math.sqrt(np.power(self.lambda_t, 2))) * (m) * thetas[1:]
+                gradient[1:] = gradient[1:] + (abs(self.lambda_t) / math.sqrt(np.power(self.lambda_t, 2))) * (m) * self.thetas[1:]
             elif self.penalty == "l2":
-                gradient[1:] = gradient[1:] + (self.lambda_t / m) * thetas[1:]
+                l2_term = (self.lambda_t / m) * self.thetas[1:]
+                gradient[1:] = gradient[1:] + l2_term
 
             # adjust thetas/weights
-            thetas -= self.alpha * gradient
-
+            self.thetas -= (self.alpha * gradient)
+            
             # calculate current cost 
-            current_cost = self.__cost_function(y, h, thetas)
-
-            # calculate current epsilon
-            #self.curr_epsilon = np.abs(prev_cost - current_cost)
+            current_cost = self.__cost_function(y, h, self.thetas)
 
             # print current loss if verbose is on 
             if self.verbose == True and self.curr_epoch % verbose_print == 0:
@@ -100,24 +96,20 @@ class LogisticRegression:
         # print details
         if self.verbose:
             print("\nCurrent Epoch: {0}".format(self.curr_epoch))
-            #print("Current Epsilon: {0}".format(self.curr_epsilon))
             print("Current Loss: {0}".format(current_cost))
 
-        # set thetas to thetas we found aftar training
-        self.thetas = thetas
-
-    def predict(self, x):
+    def predict(self, X):
         
         # add bias and initialize as 1 (x0 * 1 = x0), for vectorization purposes
-        bias = np.ones((x.shape[0], 1))       
+        bias = np.ones((X.shape[0], 1))       
         
         # concatenate bias with features, for vectorization purposes 
-        x_bias = np.concatenate((bias, x), axis = 1)
+        x_bias = np.concatenate((bias, X), axis = 1)
         
         # theta transpose * X
         z = np.dot(x_bias, self.thetas)
 
         # use sigmoid to classify 
         return (self.__sigmoid(z) >= self.threshold).astype(np.int8)
-
+        
 ###########################################################################

@@ -46,8 +46,6 @@ def kfold_split(X, y, k = 10, shuffle = False, random_seed = None):
     return X_train, y_train, X_test, y_test
 
 ###### data modeling  #####################################################
-
-
 def data_modeling(classifiers, datasets, k = 10, transform_func = None, transform_axis = 0, transform_func_args = None):
     
     # initialize dictionary to output results for each model
@@ -82,11 +80,10 @@ def data_modeling(classifiers, datasets, k = 10, transform_func = None, transfor
                         tmp_X = tmp_X.apply(transform_func, axis = transform_axis, args = transform_func_args)
                 
                 tmp_X = tmp_X.values
-                tmp_y = tmp_dataframe.iloc[:,-1].values
-                
+                tmp_y = tmp_dataframe.iloc[:,-1].values  
                 
                 # use kfold to split dataset for cross validation
-                tmp_X_train, tmp_y_train, tmp_X_test, tmp_y_test = me.kfold_split(X = tmp_X, y = tmp_y, k = k)
+                tmp_X_train, tmp_y_train, tmp_X_test, tmp_y_test = kfold_split(X = tmp_X, y = tmp_y, k = k)
                 
                 # arrays for different metric results for each fold
                 # array for results for each fold 
