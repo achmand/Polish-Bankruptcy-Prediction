@@ -1,9 +1,9 @@
 ###### importing libraries ################################################
 # for dimensionality reduction using pca
 from sklearn.decomposition import PCA 
-# for utility functions
 from sklearn.feature_selection import SelectKBest
 from sklearn.feature_selection import chi2
+from sklearn.feature_selection import RFE
 import utilities as util
 import pandas as pd 
 import numpy as np
@@ -43,13 +43,28 @@ def pca_reduction(dataframes, n_components = None, whiten = False, svd_solver = 
     return dfs_reduced, pca_instance
 
 ###### feature selection ##################################################
-def chi2_scores(x, y, keys):
-    
+def chi2_scores(x, y, keys):    
     selector = SelectKBest(chi2, k = "all").fit(x, y)
     scores = selector.scores_
     score_dictionary = dict(zip(keys, scores))
     sorted_by_value = sorted(score_dictionary.items(), key=lambda kv: kv[1], reverse=True)
 
+    sorted_column_names = [sorted_by_value[i][0] for i in range(len(sorted_by_value))]
+    return sorted_by_value, sorted_column_names
+
+def rfe_ranking(x, y, estimator, f, keys, step = 0.1):
+
+    # initialize recursive feature elimination
+    rfe = RFE(estimator, f, step = step)
+    # fit RFE
+    rfe = rfe.fit(x, y)
+    # get the ranking for each feature 
+    ranking = rfe.ranking_
+    # create ranking dictionary 
+    ranking_dictionary = dict(zip(keys, ranking))
+    sorted_by_value = sorted(ranking_dictionary.items(), key=lambda kv: kv[1], reverse=True)
+
+    # sort column name 
     sorted_column_names = [sorted_by_value[i][0] for i in range(len(sorted_by_value))]
     return sorted_by_value, sorted_column_names
 

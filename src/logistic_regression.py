@@ -93,6 +93,8 @@ class LogisticRegression(BaseEstimator, ClassifierMixin):
             # increment current epoch 
             self.curr_epoch += 1     
 
+        self.coef_ = self.thetas[1:]
+        
         # print details
         if self.verbose:
             print("\nCurrent Epoch: {0}".format(self.curr_epoch))
