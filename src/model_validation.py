@@ -7,6 +7,7 @@ from sklearn.metrics import accuracy_score
 from sklearn.metrics import recall_score 
 from sklearn.metrics import precision_score 
 from sklearn.metrics import confusion_matrix 
+from sklearn.metrics import f1_score
 
 ###### k fold  ############################################################
 def kfold_split(X, y, k = 10, shuffle = False, random_seed = None):
@@ -82,8 +83,11 @@ def data_modeling(classifiers, datasets, k = 10, transform_func = None, transfor
                 tmp_X = tmp_X.values
                 tmp_y = tmp_dataframe.iloc[:,-1].values  
                 
+                # get labels to be used in confusion matrix
+                labels = np.unique(tmp_y) 
+
                 # use kfold to split dataset for cross validation
-                tmp_X_train, tmp_y_train, tmp_X_test, tmp_y_test = kfold_split(X = tmp_X, y = tmp_y, k = k)
+                tmp_X_train, tmp_y_train, tmp_X_test, tmp_y_test = kfold_split(X = tmp_X, y = tmp_y, k = k, shuffle=True)
                 
                 # arrays for different metric results for each fold
                 # array for results for each fold 
@@ -93,6 +97,8 @@ def data_modeling(classifiers, datasets, k = 10, transform_func = None, transfor
                 folds_recall = np.zeros([k, 2])
                 # precision array
                 folds_precision = np.zeros([k, 2])
+                # f1 score array 
+                folds_f1 = np.zeros([k, 2])
                 # true negatives array
                 folds_tn = np.zeros([k])
                 # false postives array 
@@ -139,8 +145,12 @@ def data_modeling(classifiers, datasets, k = 10, transform_func = None, transfor
                     fold_precision = precision_score(fold_tmp_y_test, fold_predicted_y, average = None)
                     folds_precision[j] = fold_precision
                     
+                    # calculating f1 score for the current fold 
+                    fold_f1 = f1_score(fold_tmp_y_test, fold_predicted_y, average=None)
+                    folds_f1[j] = fold_f1
+
                     # calculating confusion matrix 
-                    fold_cm = confusion_matrix(fold_tmp_y_test, fold_predicted_y)
+                    fold_cm = confusion_matrix(fold_tmp_y_test, fold_predicted_y, labels)
                     folds_tn[j] = fold_cm[0][0]
                     folds_fp[j] = fold_cm[0][1]
                     folds_fn[j] = fold_cm[1][0]
@@ -150,6 +160,7 @@ def data_modeling(classifiers, datasets, k = 10, transform_func = None, transfor
                 evaluation_results["Accuracy"] = np.mean(folds_accuracy)
                 evaluation_results["Recall"] = np.mean(folds_recall, axis = 0)
                 evaluation_results["Precision"] = np.mean(folds_precision, axis = 0)
+                evaluation_results["F1 Score"] = np.mean(folds_f1, axis = 0)
                 evaluation_results["True Negative"] = np.mean(folds_tn)
                 evaluation_results["False Postive"] = np.mean(folds_fp)
                 evaluation_results["False Negative"] = np.mean(folds_fn)
