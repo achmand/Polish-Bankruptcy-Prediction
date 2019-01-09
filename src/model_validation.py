@@ -47,7 +47,7 @@ def kfold_split(X, y, k = 10, shuffle = False, random_seed = None):
     return X_train, y_train, X_test, y_test
 
 ###### data modeling  #####################################################
-def data_modeling(classifiers, datasets, k = 10, transform_func = None, transform_axis = 0, transform_func_args = None):
+def data_modeling(classifiers, datasets, k = 10, transform_func = None, transform_axis = 0, transform_func_args = None, verbose = False):
     
     # initialize dictionary to output results for each model
     results = OrderedDict()
@@ -55,18 +55,27 @@ def data_modeling(classifiers, datasets, k = 10, transform_func = None, transfor
     # iterate over classifiers dictionary 
     for model_key, model_value in classifiers.items():
         
+        if verbose == True:
+            print("Model: {0}".format(model_key))
+
         # initialize dictionary for each imputation datasets result
         imputation_results = OrderedDict()
         
         # iterate over different datasets imputted using different techniques
         for dataset_key, dataset_value in datasets.items():
             
+            if verbose == True:
+                print("\tDataset: {0}".format(dataset_key))
+
             # initialize dictionary for dataset result
             dataset_results = OrderedDict()
             
             # iterate over each dataframe in datasets 
             for i in range(len(dataset_value)):
                 
+                if verbose == True:
+                    print("\t\tDataset No: {0}".format(i))
+
                 # get dataframe at the specified index
                 tmp_dataframe = dataset_value[i]
                 
@@ -114,6 +123,9 @@ def data_modeling(classifiers, datasets, k = 10, transform_func = None, transfor
                 # iterate over different split/folds 
                 for j in range(k):
                     
+                    if verbose == True:
+                        print("\t\t\tFold No: {0}".format(j))
+
                     # get current fold 
                     fold_tmp_X_train = tmp_X_train[j]
                     fold_tmp_y_train = tmp_y_train[j]
