@@ -67,6 +67,7 @@ class DecisionTree:
         # return best decision and gain (split)
         return best_gain, best_decision
 
+
     def __construct_tree(self, instances):
         
         # split dataset and get the decision with the highest gain
