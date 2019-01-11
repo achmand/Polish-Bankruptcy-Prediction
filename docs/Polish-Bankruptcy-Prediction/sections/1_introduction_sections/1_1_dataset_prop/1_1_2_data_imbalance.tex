@@ -1,0 +1,23 @@
+\subsection{Data Imbalance}\label{ssec:data_imb}
+
+After exploring the features, the outcomes were analysed to check whether or not the dataset is imbalanced (labels skewed to one class). As shown in Table \ref{table:imb_labell}, the dataset is highly imbalanced with almost every forecasting period having around 96\% of the instances classified as non-bankrupt. 
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+\textbf{Year} & \textbf{Non-bankrupt (0)} & \textbf{Bankrupt (1)} & \textbf{Minority} & \textbf{Minority Percentage} \\ \hline
+1\_year       & 6756                      & 271                   & 1                 & 0.038566                     \\ \hline
+2\_year       & 9773                      & 400                   & 1                 & 0.039320                     \\ \hline
+3\_year       & 10008                     & 495                   & 1                 & 0.047129                     \\ \hline
+4\_year       & 9277                      & 515                   & 1                 & 0.052594                     \\ \hline
+5\_year       & 5500                      & 410                   & 1                 & 0.069374                     \\ \hline
+\end{tabular}
+\caption{Imbalanced labels stats, output generated using dataexp.py}
+\label{table:imb_labell}
+\end{table}
+
+\noindent This can be a problem when using classification models because the data is skewed to one label and cannot really capture how well it did when predicting whether a company will go bankrupt or not.  Using this dataset without tackling this issue can result in good accuracy (other metrics can be used to capture how well the model is doing when predicting the minority class) since most instances fall under the same class, but again it won’t be trained well to be able to predict the minority class (bankrupt). 
+
+\noindent To tackle such issue, synthetic data will be generated to oversample the dataset with synthetic instances belonging to the minority class. This technique will balance out the dataset and will allow the model/s to be exposed to a greater number of instances with the minority class, thus this will be improving the chances for the model to predict the correct classification when an instance is labelled as bankrupt. 
+\input{sections/1_introduction_sections/1_1_dataset_prop/1_1_2_data_imb/1_1_2_1_smote}

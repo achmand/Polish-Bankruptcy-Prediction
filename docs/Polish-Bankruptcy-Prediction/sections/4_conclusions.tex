@@ -1,0 +1,26 @@
+\chapter{Conclusion}\label{chp:conclusion}
+\noindent For the experiments done, the final metrics to evaluate their performance, are the averaged out accuracies and F1 scores of all forecasting periods as shown in Table \ref{table:mean_metrics_pp}. It was primarily noted that the Mean Imputation technique on missing data performed better than the Mode Imputation technique for the implementations from first principles of all models, and also for all the feature selection and dimensionality reduction techniques. The only model that performed nearly as good with Mode Imputation compared to Mean Imputation was Logistic Regression,
+with discrepancies of the averaged accuracy and F1 scores being;
+\begin{itemize}
+\itemsep0em
+    \item -0.31\% and [-0.3\%, +0.6\%], respectively for the Oversampled dataset
+    \item -0.62\% and [-2.7\%, +0.1\%], respectively for the Oversampled PCA dataset
+    \item -0.45\% and [+0.8\%, -3.5\%], respectively for the Oversampled Chi2 datasets
+    \item -0.02\% and [0\%, +0.001\%], respectively for the Oversampled RFE dataset
+\end{itemize}
+The accuracy metric for all models when using Mean Imputation was between the range of +0.02\% to +3.84\% when compared to Mode Imputation, thus making it the best Imputation technique in terms of overall accuracy. In terms of F1 score it was performing better by the range of [0\%, 0.1\%] to [+3.9\%, +3.1\%]. Therefore the Mean Imputation technique is selected for the best performing Imputation technique as the only model that had better performance when using Mode Imputation was the Logistic Regression, but this model in general performed poorly with accuracy scores between the ranges of 49.48\% and 58.22\%, while low F1 scores in ranges of [37.1\%, 29.4\%] to [56.6\%, 55.3\%]. Regarding Feature Selection and Dimensionality Reduction techniques, RFE and Chi2 where the best performing in this case. PCA was falling behind with accuracy score discrepancies as large as approximately 5\% and F1 scores discrepancies as large as approximately [5\%, 5\%]. For Decision Tree and Random Forest implemented from first principles; with no Feature Selection or Dimensionality Reduction, and for RFE and Chi2 feature selection techniques the accuracy and F1 scores where;
+\begin{itemize}
+\itemsep0em
+    \item 93.16\% and [93\%, 93.3\%], respectively for Decision Tree with Oversampled dataset
+    \item 91.96\% and [91.8\%, 92.1\%], respectively for Decision Tree with Oversampled Chi2 dataset
+    \item 92.06\% and [91.9\%, 92.2\%], respectively for Decision Tree with Oversampled RFE dataset
+    \item 88.11\% and [87.8\%, 88.4\%], respectively for Random Forest with Oversampled dataset
+    \item 89.01\% and [89.2\%, 88.8\%], respectively for Random Forest with Oversampled Chi2 dataset
+    \item 88.96\% and [89.2\%, 88.7\%], respectively for Random Forest with Oversampled RFE dataset.
+\end{itemize}
+
+\noindent From the final results above, Decision Tree with Oversampled dataset with no feature selection and reduction, performed best with an accuracy score of 93.16\% and F1 score of [93\%, 93.3\%], while the Random Forest with Oversampled dataset with no feature selection and reduction, performed best from the implementations done with \textbf{sklearn} learn with an accuracy score of 96.19\% and F1 score of [96.2\%, 96.2\%].
+
+\noindent For future work other imputation techniques which were not investigated in this project or the cited work \cite{saisree:github} done on this problem, should be investigated. Also Feature Reduction and Feature Selection should be tested with a range of maximum features to be selected or reduced. Furthermore, other Feature Reduction techniques such as Linear Discriminant Analysis could be implemented and compared, and as for Feature Selection, methods such as Genetic Algorithms could be implemented and compared. Hyper parameters used in the models could also be investigated.
+
+

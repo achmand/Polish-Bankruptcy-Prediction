@@ -1,0 +1,9 @@
+\section{Dimensionality Reduction and Feature Selection}\label{sec:dimred}
+
+Feature selection techniques are methods used to eliminate features which are redundant or irrelevant. This is achieved using different methods but the most common is to find any features which are correlated to each other (or correlation with the outcome) thus removing redundant and unwanted features. This in turn can simplify the hypothesis in a model which can improve both performance and memory allocation, while also reduces overfitting (reducing bias).  There are various techniques to achieve this but for the purpose of this project, Recursive Feature Elimination (RFE) and Chi2 feature selection will be described.
+
+\noindent On the other hand, dimensionality reduction, reduces the dimensionality by creating new synthetic features based on the original features using some method unlike feature selection which chooses a subset of the original features. This is done by reducing multiple correlated features/dimensions into fewer synthetic features/dimensions, like compressing 2 dimensions into 1 dimension.  This has the same ramifications as feature selection (performance and memory) but except for trying to keep as much information as possible.  It is also used to help visualize multi-dimensional datasets in plots.   
+ 
+\input{sections/2_background_sections/2_3_feature_selection/2_3_1_rfe}
+\input{sections/2_background_sections/2_3_feature_selection/2_3_2_chisquared}
+\input{sections/2_background_sections/2_3_feature_selection/2_3_3_pca}

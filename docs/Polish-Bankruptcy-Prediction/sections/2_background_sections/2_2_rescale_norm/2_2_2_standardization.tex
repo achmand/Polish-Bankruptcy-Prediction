@@ -1,0 +1,5 @@
+\subsection{Standardization}\label{ssec:standardization}
+Standardizing the data is the process of rescaling features so to have a mean of 0 and standard deviation of 1. Unlike rescaling the data is not bound by a specified range. It is also used when the data has varying scales. This technique is more effective when applied to data that follows a normal distribution but can also be used if it does not. Standardization is commonly used in PCA with covariance matrix since you want to find a way of maximizing the variance. Standardization is calculated using the Equation \eqref{eq:standard}, which subtracts $x$ with the mean, and then divided with the standard deviation. 
+\begin{equation} \label{eq:standard}
+    x_{new} = \frac{x - \mu}{\sigma}
+\end{equation}

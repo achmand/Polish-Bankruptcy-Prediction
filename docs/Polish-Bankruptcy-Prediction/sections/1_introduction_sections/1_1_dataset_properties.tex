@@ -1,0 +1,22 @@
+\section{Dataset Properties}\label{ssec:datasetprop}
+
+As discussed, the dataset consists of data about Polish companies, so the domain which will be explored is Finance and Business. The total number of instances inside this dataset amount to 10503, with a total of 64 attributes/features. Each instance is labelled as non-bankrupt or bankrupt which are encoded as 0 or 1. The features inside the dataset are synthetic features meaning they are made up of different econometric measures using arithmetic operations \cite{saisree:github}. This was done to combine econometric indicators which are well known by domain experts to create complex features which are shown in Figure \ref{fig:features}. Each feature is made up of real-valued variables. The dataset is also split into different forecasting periods which are as follows;
+\vspace{-3mm}
+\begin{itemize}
+    \itemsep0em 
+  \item \textbf{\textit{\nth{1} year}}: the data contains financial rates from \nth{1} year of the forecasting period and corresponding class label that indicates bankruptcy status after 5 years.
+  \item  \textbf{\textit{\nth{2} year}}: the data contains financial rates from \nth{2} year of the forecasting period and corresponding class label that indicates bankruptcy status after 4 years.
+  \item \textbf{\textit{\nth{3} year}}: the data contains financial rates from \nth{3} year of the forecasting period and corresponding class label that indicates bankruptcy status after 3 years.
+  \item \textbf{\textit{\nth{4} year}}: the data contains financial rates from \nth{4} year of the forecasting period and corresponding class label that indicates bankruptcy status after 2 years.
+  \item \textbf{\textit{\nth{5} year}}: the data contains financial rates from \nth{5} year of the forecasting period and corresponding class label that indicates bankruptcy status after 1 year. 
+\end{itemize}
+
+\begin{figure}[ht]
+\centering
+  \includegraphics[scale = .72]{imgs/features.JPG}
+  \caption{Features in Polish Bankruptcy Dataset \cite{saisree:github}}
+  \label{fig:features}
+\end{figure}
+\input{sections/1_introduction_sections/1_1_dataset_prop/1_1_1_feature_exploration}
+\input{sections/1_introduction_sections/1_1_dataset_prop/1_1_2_data_imbalance.tex}
+\input{sections/1_introduction_sections/1_1_dataset_prop/1_1_3_tackling_issues}

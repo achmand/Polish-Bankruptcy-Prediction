@@ -1,0 +1,16 @@
+\subsection{Principal Component Analysis}\label{ssec:pca}
+Principal Component Analysis \cite{tipping1999probabilistic}, or PCA for short, is a dimensionality reduction technique where its main objective, as the name suggests, is to identify principal components in a dataset. Principal components are identified with the help of a covariance matrix as shown in Equation \eqref{eq:pcacovariance} of the dataset. When two or more variables have a high positive covariance, the information in both can be represented by a single Principal Component.
+
+\begin{multicols}{2}
+    \begin{equation} \label{eq:pcacovariance}
+        \Sigma = \sum\limits_{i=1}^{n} (x_i) (x_i) ^T
+    \end{equation} 
+    \\ 
+    \begin{equation} \label{eq:pcasvd}
+       \Sigma = U \cdot S \cdot V^T
+    \end{equation}
+\end{multicols}
+
+\noindent After calculating the covariance matrix, the eigenvectors and their eigenvalues are calculated by decomposing the covariance matrix. This is done by several methods, but the most commonly used method is Singular-Value Decomposition, or SVD for short. What SVD does as shown in Equation \eqref{eq:pcasvd}, is decompose $m \ \times \ n$ into 3 matrices, $m \ \times \ m$ unitary matrix $U$, an $m \ \times \ n$ diagonal matrix $S$ and an $n \ \times \ n$ unitary matrix $V$. From this decomposition, the eigevalues and eigenvectors are extracted. This process have been simplified for the purposes of this project. 
+
+\noindent The eigenvectors represent the direction of the new axis’ and the eigenvalues represent the variance of data on that eigenvector. The eigenvectors are then sorted by their eigenvalues, and the eigenvectors that have the least variance can be discarded. For a k-dimensional dataset, there can only be k-eigenvectors, as all the combination of eigenvectors must span over the k-dimensional space. Therefore, when eliminating the eigenvectors that represent the data with least variance, dimensions are being reduced, as their data can still be projected with minimal error on the eigenvectors that represent the data with most variance.

@@ -1,0 +1,37 @@
+\section{Performance Metrics}\label{sec:perf_metrics}
+In this classification problem the following performance metrics will be used to quantify the results for the different experiments conducted at a later stage;
+
+\begin{itemize}
+\itemsep0em
+    \item \textbf{\textit{Accuracy}}: The most basic metric for classification problems, which basically is the number of correct classifications (predicted) made up by the model over all the predictions (correct and incorrect) which were made by the same model. \item \textbf{\textit{Recall}}: Such metric quantifies how many actual positives were predicted by the model by classifying them as positives. In the experiments this metric will be given high importance since the cost of having a false negative is quite important in this situation meaning that the model must not classify a company as non-bankrupt when it is bankrupt. Recall is calculated using the Equation \eqref{eq:recall}.
+    \begin{equation} 
+    \label{eq:recall}
+    Recall = \frac{True \ Positive}{True \ Positive + False\ Negative}
+    \end{equation}
+    \item \textbf{\textit{Precision}}: This metric measure how precise is the model when predicting positive values (how many of these predictions are actually positive). It will also determine whether the model is misclassifying non-bankrupt companies as positives and this is quite important in this problem since it can infer misleading information (not investing in such companies because the model predicted that a company will go bankrupt). Precision is calculated using the Equation \eqref{eq:precision}.
+    \begin{equation} 
+    \label{eq:precision}
+    Recall = \frac{True \ Positive}{True \ Positive + False\ Positive}
+    \end{equation}
+    \item \textbf{\textit{F1 Score}}: This metric will be used to select the best model from the experiments since both precision and recall are highly important in this situation. This score is the weighted average of precision and recall. The highest score for F1 is 1 and the lowest is 0. F1 score is calculated using the following Equation \eqref{eq:f1score}. 
+    \begin{equation} 
+    \label{eq:f1score}
+    F1 = 2 * \frac{Precision * Recall}{Precision + Recall}
+    \end{equation}
+    \item \textbf{\textit{Confusion Matrix}}: This matrix will be used to help to visualize the variables used in the metrics described above.  The matrix will output the True Positive, False Negative, False Positive and True Negative of each class. Below is an example of a confusion matrix. 
+
+\begin{table}[H]
+\centering
+\renewcommand\arraystretch{1}
+\setlength\tabcolsep{0pt}
+\begin{tabular}{c >{\bfseries}r @{\hspace{0.7em}}c @{\hspace{0.4em}}c @{\hspace{0.7em}}l}
+  \multirow{10}{*}{\rotatebox{90}{\parbox{1.1cm}{\bfseries\centering actual\\ value}}} & 
+    & \multicolumn{2}{c}{\bfseries Prediction outcome} & \\
+  & & \bfseries p & \bfseries n & \bfseries total \\
+  & p$'$ & \MyBox{True}{Positive} & \MyBox{False}{Negative} & P$'$ \\[2.4em]
+  & n$'$ & \MyBox{False}{Positive} & \MyBox{True}{Negative} & N$'$ \\
+  & total & P & N &
+\end{tabular}
+\end{table}
+
+\end{itemize}

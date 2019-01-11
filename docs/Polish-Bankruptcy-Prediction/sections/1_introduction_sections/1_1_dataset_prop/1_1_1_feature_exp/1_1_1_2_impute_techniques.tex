@@ -1,0 +1,10 @@
+\subsubsection{Imputation Techniques}\label{sssec:imputetech}
+
+\noindent After the missing values were analysed, it was decided that imputation techniques (replacing missing values with a substitute) would be used to fill in the missing values. Previous work done on this dataset \cite{saisree:github} utilized the following imputation techniques; Mean, k-Nearest Neighbours, Expectation-Maximization and Multivariate Imputation by chained equations. In the experiments, Mean Imputation will be used since it produced the best results in the cited work. Moreover, Mode Imputation will also be tested to investigate whether this will be an improvement over Mean Imputation. 
+\vspace{-3.5mm}
+\begin{itemize}
+\itemsep0em
+    \item \textbf{\textit{Mean Imputation}}: This technique imputes the missing data with the mean of that feature, where the data can only be numeric. Due to the nature of all the missing data being imputed with the same value, it sometimes has the undesirable effect of adding bias and reducing variance, which in turn affects the correlation value between other features. 
+    \item \textbf{\textit{Mode Imputation}}: This technique imputes the missing data with the most frequent value for that feature, with the intuition that the modal value has a higher chance of being in the dataset. The advantage of this technique is that it can also be used on non-numeric data.
+\end{itemize}
+\vspace{-3.5mm}

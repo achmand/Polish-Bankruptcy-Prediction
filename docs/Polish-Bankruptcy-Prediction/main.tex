@@ -1,0 +1,72 @@
+\documentclass[a4paper,10pt]{report}
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{datetime}
+\usepackage[hyphens]{url}
+\usepackage{hyperref}
+\usepackage{fontspec}
+\usepackage{multicol}
+\usepackage{subcaption} 
+\usepackage[a4paper,left=2.5cm,right=2cm,top=2.5cm,bottom=2.5cm]{geometry}
+\usepackage{titlesec}
+\usepackage{float}
+\usepackage[super]{nth}
+\usepackage{float}
+\usepackage{array}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{xcolor}
+\usepackage[colorlinks = true,
+            linkcolor = blue,
+            urlcolor  = blue,
+            citecolor = blue,
+            anchorcolor = blue]{hyperref}
+\newcommand{\MYhref}[3][blue]{\href{#2}{\color{#1}{#3}}}%
+
+\newcommand\MyBox[2]{
+  \fbox{\lower0.75cm
+    \vbox to 1.7cm{\vfil
+      \hbox to 1.7cm{\hfil\parbox{1.4cm}{#1\\#2}\hfil}
+      \vfil}%
+  }%
+}
+
+\setlength{\belowcaptionskip}{-5pt}
+\titleformat{\chapter}[hang]   
+{\normalfont\fontsize{15}{15}\bfseries}{\chaptertitlename\ \thechapter:}{.3em}{}   
+\titlespacing*{\chapter}{0pt}{5pt}{5pt}
+
+\titleformat{\section}
+  {\normalfont\fontsize{12}{12}\bfseries}{\thesection}{1em}{}
+\titlespacing*{\section}{0pt}{5pt}{5pt}
+
+\titleformat{\subsection}
+{\normalfont\fontsize{10}{10}\bfseries}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}
+{\normalfont\small\bfseries}{\thesubsubsection}{1em}{}
+\titlespacing*{\subsection}{0pt}{5pt}{5pt}
+
+\titlespacing*{\subsubsection}{0pt}{5pt}{5pt}
+
+\setmainfont{Arial}
+\newdateformat{monthyeardate}{%
+  \monthname[\THEMONTH], \THEYEAR}
+
+% set spacing
+\setlength{\parindent}{1em}
+\setlength{\parskip}{1em}
+% set line spacing to single line space
+\renewcommand{\baselinestretch}{1.0}
+
+\setcounter{secnumdepth}{3}
+
+\begin{document}
+\input{sections/0_page_title}
+\input{sections/1_introduction}
+\input{sections/2_background}
+\input{sections/3_experiments}
+\input{sections/4_conclusions}
+\input{sections/5_references}
+\end{document}

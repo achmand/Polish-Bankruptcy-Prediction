@@ -1,0 +1,11 @@
+\section{Carried Out Experiments}\label{sec:carriedexp}
+Experiments carried out can be found in the IPython notebook in the ‘Perform Data Modelling’ section. In total four experiments were carried out which are as follows;
+\begin{itemize}
+\itemsep0em
+    \item \textbf{\textit{Experiment No 1}}: Oversampled dataset for each forecasting period using different imputation techniques (Mean and Mode). 
+    \item \textbf{\textit{Experiment No 2}}: Oversampled dataset with feature reduction (PCA) for each forecasting period using different imputation techniques. 
+    \item \textbf{\textit{Experiment No 3}}: Oversampled dataset with feature selection (Chi2) for each forecasting period using different imputation techniques. 
+    \item \textbf{\textit{Experiment No 4}}: Oversampled dataset with feature selection (RFE) for each forecasting period using different imputation techniques. 
+\end{itemize}
+
+\noindent The dataset was oversampled using SMOTE which was described in Subsection \ref{sssec:smote}. Each experiment was conducted using the proposed models in Subsection \ref{ssec:proposedmodels} and using the imputation techniques discussed in Subsection \ref{sssec:imputetech}. All experiments where validated using K-fold cross validation \(k = 5\) which was described in Section \ref{sec:cross_val_sec} and the results were quantified using the performance metrics mentioned in Section \ref{sec:perf_metrics}. Furthermore, when Logistic Regression was used, the features were rescaled between the range of 0 and 1, for the same reasons described in Subsection \ref{ssec:normalisation}. A script called \textbf{model\_validation.py} was created to test different experiments.  
