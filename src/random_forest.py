@@ -6,7 +6,7 @@ from decision_tree import DecisionTree
 
 ###### random forest ######################################################
 class RandomForest:
-    def __init__(self, n_estimators = 10, max_features = "auto", bag_ratio = 0.6, bootstrap = True, random_seed = None):
+    def __init__(self, n_estimators = 10, max_features = "auto", bag_ratio = 0.6, bag_features = True, random_seed = None):
         self.n_estimators = 10 if n_estimators <= 0 else n_estimators
         self.random = random 
 
@@ -16,9 +16,9 @@ class RandomForest:
 
         self.max_features = max_features
         
-        # if boostrap is true make sure that the bag_ratio passed is correct 
-        self.bootstrap = bootstrap
-        if self.bootstrap == True:
+        # if bag_features is true make sure that the bag_ratio passed is correct 
+        self.bag_features = bag_features
+        if self.bag_features == True:
             self.bag_ratio = 0.6 if bag_ratio > 1 or bag_ratio <= 0 else bag_ratio
     
     def __sample_instances(self, instances):
@@ -40,8 +40,8 @@ class RandomForest:
         # compute the total size of samples 
         self.instances_len = len(instances)
 
-        # if bootstrap is true compute the length of each bag using bag_ratio
-        if self.bootstrap == True:
+        # if bag_features is true compute the length of each bag using bag_ratio
+        if self.bag_features == True:
             self.bag_instances_len = round(self.instances_len * self.bag_ratio)
 
         # initialize forest
@@ -66,7 +66,7 @@ class RandomForest:
             subspace_instances = instances[:, subspace_indexes]
 
             # if bootrap is true get sample from subspace_instances (with replacement)
-            if self.bootstrap == True:
+            if self.bag_features == True:
                 training_instances = self.__sample_instances(subspace_instances)
             else:
                 training_instances = subspace_instances
