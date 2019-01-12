@@ -1,5 +1,4 @@
 ###### importing libraries ################################################
-# for dimensionality reduction using pca
 from sklearn.decomposition import PCA 
 from sklearn.feature_selection import SelectKBest
 from sklearn.feature_selection import chi2

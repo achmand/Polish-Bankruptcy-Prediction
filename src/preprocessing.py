@@ -1,13 +1,9 @@
 ###### importing libraries ################################################
-# basic libraries for matrix operations
 import numpy as np
 import pandas as pd
-# for utility functions
 import utilities as util
-# to impute missing values in datasets
 import impyute as impy 
 from sklearn.impute import SimpleImputer
-# to over sample datasets using smote 
 from imblearn.over_sampling import SMOTE
 
 ###### data imputation ####################################################

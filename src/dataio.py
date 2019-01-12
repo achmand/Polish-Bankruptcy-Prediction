@@ -1,3 +1,4 @@
+###### importing libraries ################################################
 import os
 import sys
 import arff as ar 
@@ -5,6 +6,11 @@ import pandas as pd
 import utilities as util
 from scipy.io import arff
 
+""" This script holds functions which handle 
+    data input and output operations.
+"""
+
+###### directory functions ################################################
 def file_paths (path, extensions):
     """Get file names for specific extensions in the specified path.
 
@@ -25,6 +31,18 @@ def file_paths (path, extensions):
             dirs_list.append(path + dirs[i])
     return dirs_list
 
+# does not take care of race conditions... 
+def create_dir(dir):
+    """Creates directory if it does not exist.
+
+    Args:
+        dir (str): The path for the directory. 
+    """
+    
+    if not os.path.exists(dir):
+        os.makedirs(dir)
+
+###### arff i/o functions #################################################
 def arff2df (paths, include_path = False):    
     """Convert .arff files to dataframes.
 
@@ -36,6 +54,7 @@ def arff2df (paths, include_path = False):
     Returns:
         list of pandas dataframe: A list of dataframes converted from the specified .arff files.
     """
+
     df_list = []    
     for i in range(len(paths)):
         if(include_path == True):
@@ -51,14 +70,16 @@ def df2arff_function(path, filenames, function, *args):
         dfs = function(*args) 
         df2arff(dfs, path, filenames)
 
-# does not take care of race conditions... 
-def create_dir(dir):
-    if not os.path.exists(dir):
-        os.makedirs(dir)
-
-# TODO -> Also accept single file name (str) not only list of str...
 def df2arff(dataframes, path, file_names):
+    """Converts dataframes to .arff files using the arff library.
+
+    Args:
+        dataframes (pandas' dataframe or a list of pandas' dataframes): The dataframe or list of dataframes to convert.
+        path (str): The path to save into.
+        file_names (list of str): The names of the files to be saved.
+    """
     dfs = util.df_to_dfs(dataframes)
     for i in range(len(dfs)):
         ar.dump(path + file_names[i] + '.arff', dfs[i].values, names=dfs[i].columns)
-        
+
+###########################################################################
