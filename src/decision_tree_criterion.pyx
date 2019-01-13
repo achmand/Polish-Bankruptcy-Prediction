@@ -4,10 +4,11 @@ cimport numpy as np
 from cpython cimport bool
 
 """ This script holds functions/metrics used 
-in the DecisionTree class found in the decision_tree.py
-script.
+    in the DecisionTree class found in the decision_tree.py
+    script.
 """
 
+###### gini impurity ######################################################
 # this method is not used in the decision_tree script but the binary one is used instead
 # this should be used when u have multi class
 cpdef double gini_impurity(np.ndarray[np.int8_t, ndim = 1, mode = 'c'] y):
@@ -79,6 +80,7 @@ cpdef double binary_gini_impurity(np.ndarray[np.int8_t, ndim = 1, mode = 'c'] y)
     cdef double prob_category = 1.0 - (((counter_a / y_len) * (counter_a / y_len)) + ((counter_b / y_len) * (counter_b / y_len)))
     return prob_category
 
+###### information gain ###################################################
 # this method is not used in the script but the binary one is 
 # this should be used when u have multi class
 cpdef double information_gain(np.ndarray[np.int8_t, ndim = 1, mode = 'c'] y_left, np.ndarray[np.int8_t, ndim = 1, mode = 'c'] y_right, double gini):
@@ -131,6 +133,7 @@ cpdef double binary_information_gain(np.ndarray[np.int8_t, ndim = 1, mode = 'c']
     # calculate and return information gain
     return gini - l_impurity - r_impurity
 
+###### node split #########################################################
 cpdef tuple decision_split(np.ndarray x, (int, double) decision):
     """ Split node into two child nodes based on a paricular decision. 
 
@@ -165,3 +168,5 @@ cpdef tuple decision_split(np.ndarray x, (int, double) decision):
     
     # return both lists as numpy arrays
     return np.array(true_instances), np.array(false_instances)
+
+###########################################################################

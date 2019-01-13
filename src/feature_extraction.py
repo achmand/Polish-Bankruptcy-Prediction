@@ -7,9 +7,28 @@ import utilities as util
 import pandas as pd 
 import numpy as np
 
+""" This script holds functions for feature reduction
+    and selection.
+"""
+
 ###### feature reduction ##################################################
 def pca_reduction(dataframes, n_components = None, whiten = False, svd_solver = "auto", random_state = None, columns = None, pca_instance = None):
-    
+    """Feature Reduction using sklearns' PCA.
+
+    Args:
+        dataframes (pandas' dataframe or a list of pandas' dataframes): The instances or a list of different instance to reduce.
+        n_components (int): Number of components to keep.
+        whiten (bool): When True, the components_ vectors are multiplied by the square root of n_samples and then divided by the singular values to ensure uncorrelated outputs with unit component-wise variances.
+        svd_solver (string {‘auto’, ‘full’, ‘arpack’, ‘randomized’}) : The solver used in PCA.
+        random_state(int): To seed the Random instance.
+        columns (list str): Used to set the column names for the reduced instances. 
+        pca_instance (PCA): Can pass an instance of PCA to be used instead of initializing a new instance.
+
+    Returns:
+        list of pandas' dataframes: A list of pandas' dataframes with reduced features.
+        PCA: The PCA instance used in the function.
+    """
+
     # convert dataframe to dataframes if necessary
     dfs = util.df_to_dfs(dataframes)
     
@@ -43,6 +62,18 @@ def pca_reduction(dataframes, n_components = None, whiten = False, svd_solver = 
 
 ###### feature selection ##################################################
 def chi2_scores(x, y, keys):    
+    """Ranks features using slearns' Chi2.
+
+    Args:
+        x (numpy array): The instances used for RFE X.
+        y (numpy array): A 1D numpy array with the respective labels for X.
+        keys (list of str): A list of names of the respective features.
+        
+    Returns:
+        dictionary: A dictionary of features sorted by rank.
+        list of str: A list of column names sorted by rank.
+    """
+
     selector = SelectKBest(chi2, k = "all").fit(x, y)
     scores = selector.scores_
     score_dictionary = dict(zip(keys, scores))
@@ -52,6 +83,20 @@ def chi2_scores(x, y, keys):
     return sorted_by_value, sorted_column_names
 
 def rfe_ranking(x, y, estimator, f, keys, step = 0.1):
+    """Ranks features using slearns' Recursive Feature Elimination.
+
+    Args:
+        x (numpy array): The instances used for RFE X.
+        y (numpy array): A 1D numpy array with the respective labels for X.
+        estimator(model which inherits from BaseEstimator, ClassifierMixin) Estimator used in RFE.
+        f (int): The number of features to select. If None, half of the features are selected.
+        keys (list of str): A list of names of the respective features.
+        step (int or float): If greater than or equal to 1, then step corresponds to the (integer) number of features to remove at each iteration. If within (0.0, 1.0), then step corresponds to the percentage (rounded down) of features to remove at each iteration.
+        
+    Returns:
+        dictionary: A dictionary of features sorted by rank.
+        list of str: A list of column names sorted by rank.
+    """
 
     # initialize recursive feature elimination
     rfe = RFE(estimator, f, step = step)

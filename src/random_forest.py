@@ -4,9 +4,23 @@ import random
 import numpy as np
 from decision_tree import DecisionTree
 
+""" This script holds all the classes needed, 
+    to build a RandomForest.
+"""
+
 ###### random forest ######################################################
 class RandomForest:
     def __init__(self, n_estimators = 10, max_features = "auto", bag_ratio = 0.6, bag_features = True, random_seed = None):
+        """Constructor for RandomFores.
+
+        Args:
+            n_estimators (int): The number of estimators to be used (DecisionTrees).
+            max_features (str or int or float) If str (auto or sqrt uses sqrt, log2 uses log base 2 ) uses function for max_features, if int uses max_features as the int set, if float takes percentage.
+            bag_ratio (float): The percentage of the dataset to use when bagging the dataset.
+            bag_features (bool): If true dataset bagging will be used, if not dataset bagging wont be used.
+            random_seed (int): If passed a random seed would be used when random is used (bagging/random subspace method).
+        """
+
         self.n_estimators = 10 if n_estimators <= 0 else n_estimators
         self.random = random 
 
@@ -86,7 +100,13 @@ class RandomForest:
         return forest
 
     def fit(self, x, y):
-        
+        """Fits the RandomForest model (training).
+
+        Args:
+            x (numpy array): The instances used for training X.
+            y (numpy array): A 1D numpy array with the respective labels for X.
+        """
+
         # set the number of features to used in RandomForest (attribute bagging)
         self.total_features = x.shape[1]
         if type(self.max_features) is str:
@@ -113,10 +133,18 @@ class RandomForest:
         return np.bincount(array).argmax()
 
     def predict(self, x):
+        """Predicts unforeseen instances.
+
+        Args:
+            x (numpy array): The instances used for predictions X.
+           
+        Returns:
+            numpy array: A numpy 1D array with the predicted outcomes.
+        """
+
         predictions = np.array([tree[0].predict(x[:,tree[1]]) for tree in self.forest]) 
         return np.apply_along_axis(self.__majority_vote, 0, predictions)
-
-
+        
 ##########################################################################
 
 

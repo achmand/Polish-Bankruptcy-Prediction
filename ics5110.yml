@@ -20,6 +20,7 @@ dependencies:
   - conda-env=2.6.0=1
   - constantly=15.1.0=py37h28b3542_0
   - cryptography=2.3.1=py37hc365091_0
+  - cudatoolkit=9.2=0
   - cycler=0.10.0=py37_0
   - cython=0.29=py37he6710b0_0
   - dbus=1.13.2=h714fa37_1
@@ -64,6 +65,7 @@ dependencies:
   - libuuid=1.0.3=h1bed415_2
   - libxcb=1.13=h1bed415_1
   - libxml2=2.9.8=h26e45fe_1
+  - llvmlite=0.27.0=py37hd408876_0
   - markupsafe=1.0=py37h14c3975_1
   - matplotlib=3.0.1=py37h5429711_0
   - mistune=0.8.4=py37h7b6447c_0
@@ -79,6 +81,7 @@ dependencies:
   - nbformat=4.4.0=py37_0
   - ncurses=6.1=hf484d3e_0
   - notebook=5.7.0=py37_0
+  - numba=0.42.0=py37h962f231_0
   - numpy=1.15.4=py37h1d66e8a_0
   - numpy-base=1.15.4=py37h81de0dd_0
   - openssl=1.0.2p=h14c3975_0

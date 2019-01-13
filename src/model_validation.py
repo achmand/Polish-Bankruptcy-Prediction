@@ -1,5 +1,4 @@
 ###### importing libraries ################################################
-# for cross validation
 import numpy as np 
 from collections import OrderedDict
 from sklearn.model_selection import KFold

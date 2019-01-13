@@ -5,8 +5,8 @@ import utilities as util
 import missingno as msno 
 
 """ This script holds functions which output stats
-and different plots about the features. 
-This is used for feature exploration.
+    and different plots about the features. 
+    This is used for feature exploration.
 """
 
 ###### statistics #########################################################

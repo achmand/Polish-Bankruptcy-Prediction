@@ -1,8 +1,10 @@
+###### importing libraries ################################################
 import pandas as pd
 
 """ This script holds utility functions.
 """
 
+###### utility functions ##################################################
 def df_to_dfs(dataframes):
     """ Checks if the dataframe/s passed is a list if not convert it to a list of pandas's dataframes. 
 
@@ -23,3 +25,5 @@ def df_to_dfs(dataframes):
     
     # return a list of pandas' dataframes
     return dfs
+    
+###########################################################################

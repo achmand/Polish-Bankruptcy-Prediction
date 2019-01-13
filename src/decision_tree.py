@@ -146,7 +146,7 @@ class DecisionTree:
         Args:
             x (numpy array): The instances used for training X.
             y (numpy array): A 1D numpy array with the respective labels for X.
- 
+        
         """
 
         # concatenate x and y   
